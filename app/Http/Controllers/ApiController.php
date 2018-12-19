@@ -63,13 +63,11 @@ class ApiController extends Controller
                 
                 if (isset($user["_Products"]) && !empty($user["_Products"])) {
                     $courses = explode(',', $user["_Products"]);
-                    // create new modulereminder class and get the tag id to send to infusionsoft server
                     
+                    // create new modulereminder class and get the tag id to send to infusionsoft server
                     $moduleReminder = new ModuleReminder($courses,$email);
                     $tag =  $moduleReminder->getTagId();
-                    $infusionsoft->addTag($user['Id'],$tag);
-
-                    $out = ['success' => true, 'message' => 'Tag added successfully'];
+                    $out = $infusionsoft->addTag($user['Id'],$tag) ? ['success' => true, 'message' => 'Tag added successfully'] : ['success' => false, 'message' => 'Something went wrong or tag already added'];
                 } else{
                 // no courses found for user
                     $out['message'] = 'No courses found';

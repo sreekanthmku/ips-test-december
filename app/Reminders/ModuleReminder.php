@@ -22,25 +22,25 @@ class ModuleReminder
     * courses that the user subscribed
     * @var array
     */
-    public $courses;
+    private $courses;
 
     /**
     * user email
     * @var string
     */
-    public $email;
+    private $email;
 
     /**
     * courses in the order according to the user's course subscription
     * @var array
     */
-    public $order;
+    private $order;
 
     /**
     * The number of modules in a course. if you ever change the number of courses, just change it here. 
     * @const integer
     */
-    public const NO_OF_MODULES = 7;
+    private const NO_OF_MODULES = 7;
 
     /**
     * Construct a new class instance  with the given email, courses.
@@ -62,7 +62,7 @@ class ModuleReminder
     *
     * @return array (module as key and status (completed/Incomplete) as value)
     */
-    public function getModulesInOrder(){    
+    private function getModulesInOrder(){    
         $order = [];
         foreach ($this->courses as $course) {  
 
@@ -79,7 +79,7 @@ class ModuleReminder
     *
     * @return array (module as key and status (completed/Incomplete) as value)
     */
-    public function getCompletedModulesInOrder(){
+    protected function getCompletedModulesInOrder(){
         $user = User::whereEmail($this->email)->first();
         
         if(!empty($user)){
@@ -95,7 +95,7 @@ class ModuleReminder
     *
     * @return array
     */
-    public function markCompletedModules(){
+    private function markCompletedModules(){
         
         $order = $this->order;
         $completedModulesInOrder = $this->getCompletedModulesInOrder();
@@ -113,7 +113,7 @@ class ModuleReminder
     * @param  array  $array
     * @return array
     */
-    public function convertToMultiArray($array)
+    private function convertToMultiArray($array)
     {
         $multiArray = [];
         
@@ -130,7 +130,7 @@ class ModuleReminder
     *
     * @return array
     */
-    public function splitCompletedModules(){
+    private function splitCompletedModules(){
 
         $modules = $this->markCompletedModules();
         return array_chunk($modules,self::NO_OF_MODULES);
