@@ -60,14 +60,14 @@ class ModuleReminder
     /**
     * Gets the modules in the order according to the user's course subscription.
     *
-    * @return array (module as key and status (completed/incomplete) as value)
+    * @return array (module as key and status (completed/Incomplete) as value)
     */
     public function getModulesInOrder(){    
         $order = [];
         foreach ($this->courses as $course) {  
 
             for ($i = 1; $i <= self::NO_OF_MODULES; $i++){     
-                $order[strtoupper($course)." Module ".$i] = 'incomplete';
+                $order[strtoupper($course)." Module ".$i] = 'Incomplete';
             }
 
         }
@@ -77,7 +77,7 @@ class ModuleReminder
     /**
     * Returns the completed modules in the order(C1M1,C1M2...C1M7,C2M1,C2M2.. where C is course and M is module)
     *
-    * @return array (module as key and status (completed/incomplete) as value)
+    * @return array (module as key and status (completed/Incomplete) as value)
     */
     public function getCompletedModulesInOrder(){
         $user = User::whereEmail($this->email)->first();
@@ -90,7 +90,7 @@ class ModuleReminder
     }
 
     /**
-    * Returns an array with module as key and status (completed/incomplete) as value in the user 
+    * Returns an array with module as key and status (completed/Incomplete) as value in the user 
     * subscribed order.
     *
     * @return array
@@ -155,15 +155,15 @@ class ModuleReminder
                 // last module is not complete. the next module should be in the same array. iterate and find the module
                 for ($i = $lastIndex ; $i >= 1 ; $i--){
                     
-                    // if a module is completed and it's next module is incomplete. return the module
-                    if ($course[$i]['status'] == 'incomplete' && $course[$i-1]['status'] == 'Completed') {
+                    // if a module is completed and it's next module is Incomplete. return the module
+                    if ($course[$i]['status'] == 'Incomplete' && $course[$i-1]['status'] == 'Completed') {
                         return $course[$i];
                     }
                 }
 
                 // this code runs in the case where only first module is completed / all modules are uncomplete. 
                 // if first module is complete, return second module. else return first module
-                if (course[0]['status'] == 'incomplete') {
+                if ($course[0]['status'] == 'Incomplete') {
                     return $course[0];
                 }
                 return $course[1];
