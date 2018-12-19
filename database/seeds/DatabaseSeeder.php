@@ -12,5 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          $this->call(iPSDevTestSeeder::class);
+         $this->call(TagsTableSeeder::class);
+         $this->call(UsersTableSeeder::class);
     }
 }
